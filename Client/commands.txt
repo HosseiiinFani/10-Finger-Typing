@@ -1,0 +1,7 @@
+cd Client
+
+pipenv shell
+* pip install pipenv
+pipenv install
+
+python scenes.py

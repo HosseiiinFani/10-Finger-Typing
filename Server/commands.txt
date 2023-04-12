@@ -1,0 +1,7 @@
+cd Server
+
+pipenv shell
+* pip install pipenv
+pipenv install
+
+python main.py

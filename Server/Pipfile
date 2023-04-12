@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+verify_ssl = true
+url = "https://pypi.org/simple"
+
+[packages]
+flask = "*"
+flask-bcrypt = "*"
+Flask-SocketIO = "4.3.1"
+flask-login = "*"
+colorama = "*"
+Werkzeug = "2.0.3"
+
+[requires]
+python_version = "3.8"
+
+[dev-packages]

@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pygame = "*"
+websocket-client = "*"
+socketio-client = "*"
+python-engineio = "*"
+python-socketio = {extras = ["asyncio_client"], version = "*"}
+pygame-menu = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

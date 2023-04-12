@@ -1,0 +1,2 @@
+class ChangeTo(Exception):
+    pass
