@@ -29,10 +29,11 @@ class Button:
             dest = eval(self.formula)
             self.move(dest)
  
-    def _render(self, event):
+    def _render(self):
         pygame.draw.rect(self.screen, self.color if not self.highlighted else tuple(map(lambda x: x-100, self.color)), self.button_rect)
         button_surface = self.base_font.render(self.label, True, self.text_color)
         self.screen.blit(button_surface, (self.pos[0] + (self.pos[2]//2 - (button_surface.get_width()//2)), self.pos[1] + (self.pos[3]//2 - (button_surface.get_height()//2))))
+    def handle_center(self,event):
         if not self.fixed_pos:
             self.center_self(event)
         else:
@@ -45,7 +46,8 @@ class Button:
     
     def render(self, event):
         self.handleClick(event)
-        self._render(event)
+        self._render()
+        self.handle_center(event)
 
     def highlight(self):
         self.highlighted = True

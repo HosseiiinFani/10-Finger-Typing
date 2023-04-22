@@ -1,0 +1,8 @@
+{
+    "Level 1": {
+        "phrases": ["Hello, World!"],
+        "difficulty": 1,
+        "score": 35,
+        "name": "Level 1"
+    }
+}

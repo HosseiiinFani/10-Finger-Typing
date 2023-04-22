@@ -7,7 +7,7 @@ from setup import *
 import pickle
 from Transitions.ChangeScene import ChangeTo
 
-protected = True
+protected = False
 
 def View():
 
@@ -17,14 +17,17 @@ def View():
         raise ChangeTo("play")
     def Logout():
         raise ChangeTo("logout")
+    def SpeedTest():
+        raise ChangeTo("speed_test")
     def _logout():
         with open('data.pickle', 'wb') as f:
             pickle.dump(None, f)
 
     play_button = Button(screen, base_font, (center[0]-70, 160, 140, 40), (23,145,142), "Play", (0,0,0), Play)
     logout_button = Button(screen, base_font, (center[0]-70, 220, 140, 40), (23,145,142), "Logout", (0,0,0), Logout)
+    test_button = Button(screen, base_font, (center[0]-90, 280, 180, 40), (23,145,142), "Speed Test", (0,0,0), SpeedTest)
 
-    UI_ELEMS = [play_button, logout_button]
+    UI_ELEMS = [play_button, logout_button, test_button]
 
     run = True
 

@@ -7,32 +7,14 @@ from setup import *
 from lib.utils import handle_resize
 import math
 from Transitions.ChangeScene import ChangeTo
+import json
 
 def View():
     center = (screen.get_width()//2, screen.get_height()//2)
-
-    _levels = {
-        'Level 1': {
-            'phrases': ["aa", "bb", "cc"],
-            'difficulty': 1,
-            'score': 35,
-            'name': 'Level 1'
-        },
-        'Level 2': {
-            'phrases': ["Hello!", "How", "Are", "You?"],
-            'difficulty': 2,
-            'score': 100,
-            'name': 'Level 2'
-        },
-        'Level 3': {
-            'phrases': ["ABC!", "How", "Are", "You?"],
-            'difficulty': 2,
-            'score': 100,
-            'name': 'Level 3'
-        },
-    }
+    file_levels = open('./levels.json')
+    _levels = dict(json.load(file_levels))
     levels = list(_levels.keys())
-
+    file_levels.close()
     card_width = 190
     card_height = 100
     padding = 20

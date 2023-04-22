@@ -40,11 +40,12 @@ def View():
     time = ''
 
     def emitCorrect():
-        screen.blit(happy, (screen.get_width()-120, 20))
+        pass
+        # screen.blit(happy, (screen.get_width()-120, 20))
     def emitWrong():
         nonlocal errors
         errors += 1
-        screen.blit(sad, (screen.get_width()-120, 20))
+        # screen.blit(sad, (screen.get_width()-120, 20))
     def Pause():
         raise ChangeTo("pausemenu")
 
@@ -68,7 +69,7 @@ def View():
     text_surf_rect = font.get_rect(current)
     baseline = text_surf_rect.y
     text_surf = pygame.Surface(text_surf_rect.size)
-    text_surf_rect.center = (225, 50)
+    text_surf_rect.center = (330, 50)
     metrics = font.get_metrics(current)
 
     pause_button = Button(screen, base_font, (screen.get_width()-80, 20, 70, 40), (23,145,142), "menu", (0,0,0), Pause, fixed_pos=True, formula="(screen.get_width()-80, 20, 70, 40)")
@@ -87,6 +88,9 @@ def View():
     time_text = base_font.render(f'Time: {strftime("%M:%S", gmtime(int(timer() - start_time)))}', False, (0,0,0))
 
     screen.fill(BG)
+
+    wrong = False
+
     while run:
         text_surf.fill(BG)
 
@@ -120,8 +124,6 @@ def View():
                     if b_p:
                         if event.unicode == current[current_idx]:
                             emitCorrect()
-                            screen.blit(happy, (100, 20))
-                            pygame.display.update()
                             current_idx += 1
                             if current_idx >= len(current):
                                 current_idx = 0
@@ -147,13 +149,13 @@ def View():
                                         remainder = abs(errors_percent - 0.2)
                                         error_penalty = remainder * level_score
                                     final_score = level_score - time_penalty - error_penalty
-                                    transferContext(level_name, max(final_score, 0), errors, time, level_score)
+                                    transferContext(level_name, max(round(final_score), 0), errors, time, level_score)
                                     return "completion"
 
                                 metrics = font.get_metrics(current)
+                            wrong = False
                         else:
-                            screen.blit(sad, (100, 20))
-                            pygame.display.update()
+                            wrong = True
                             emitWrong()
                             states[current_idx] = True
 
@@ -202,6 +204,9 @@ def View():
         screen.blit(time_text, (30, 40))
         screen.blit(text_surf, text_surf_rect)
         screen.blit(errors_text, (40, 20))
+        ### MARK: 004501``
+        # if wrong: screen.blit(sad, (screen.get_width()-150, 20))
+        # else: screen.blit(happy, (screen.get_width()-150, 20))
         pygame.display.update()
         clock.tick(60)
         rest = list(filter(lambda x: x.label != current[current_idx], KEYS))

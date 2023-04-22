@@ -28,14 +28,14 @@ class KeyboardKey(Button):
         self.non_shiftable = non_shiftable
         if multiply > 1:
             if alg == 0:
-                position = (self.x + (self.spacing*column) - int(self.button_size * (multiply-1)),self.y+row*self.y_spacing,int(self.button_size*multiply),self.button_size)
-                formula = "(self.x + (self.spacing*column) - int(self.button_size * (multiply-1)),self.y+row*self.y_spacing,int(self.button_size*multiply),self.button_size)"
+                position = (self.x + (self.spacing*self.column) - int(self.button_size * (self.multiply-1)),self.y+self.row*self.y_spacing,int(self.button_size*self.multiply),self.button_size)
+                formula = "(self.x + (self.spacing*self.column) - int(self.button_size * (self.multiply-1)),self.y+self.row*self.y_spacing,int(self.button_size*self.multiply),self.button_size)"
             elif alg == 1:
-                position = (self.x+self.spacing*column,self.y+row*self.y_spacing,int(self.button_size*multiply),self.button_size)
-                formula = "(self.x+self.spacing*column,self.y+row*self.y_spacing,int(self.button_size*multiply),self.button_size)"
+                position = (self.x+self.spacing*self.column,self.y+self.row*self.y_spacing,int(self.button_size*self.multiply),self.button_size)
+                formula = "(self.x+self.spacing*self.column,self.y+self.row*self.y_spacing,int(self.button_size*self.multiply),self.button_size)"
         else:
-            position = (self.x+self.spacing*column,self.y+row*self.y_spacing,int(self.button_size*multiply),self.button_size)
-            formula = "(self.x+self.spacing*column,self.y+row*self.y_spacing,int(self.button_size*multiply),self.button_size)"
+            position = (self.x+self.spacing*self.column,self.y+self.row*self.y_spacing,int(self.button_size*self.multiply),self.button_size)
+            formula = "(self.x+self.spacing*self.column,self.y+self.row*self.y_spacing,int(self.button_size*self.multiply),self.button_size)"
         
         super().__init__(screen, base_font, position, color, key, (0,0,0), fixed_pos=True, formula=formula, onClick=None)
 
@@ -60,6 +60,8 @@ class KeyboardKey(Button):
 
     def render(self, event):
         if event.type == pygame.KEYDOWN:
+            button_name = event.unicode
+            if button_name == self.shifted or button_name == self.key: self.highlight()
             if event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT:
                 if self.non_shiftable:
                     pass
@@ -70,10 +72,12 @@ class KeyboardKey(Button):
                     else:
                         newLabel = chr(ord(self.key) - 32)
                         self.change_label(newLabel)
-        else:
+        elif event.type == pygame.KEYUP:
             self.change_label(self.original_key)
+            self.unhighlight()
         try:
-            self._render(event)
+            self._render()
+            self.handle_center(event)
         except:
             print(f"Couldn't render {self.__str__()}")
 
@@ -88,6 +92,15 @@ class KeyboardKey(Button):
                 newLabel = chr(ord(self.original_key) - 32)
                 return newLabel
  
+    def set_base(self, x, y):
+        self.base_x = x
+        self.base_y = y
+        self.x = x
+        self.y = y
+        newPos = eval(self.formula)
+        newRect = pygame.Rect(newPos)
+        self.pos = newPos
+        self.button_rect = newRect
 
     def __repr__(self) -> str:
         return f"<KeyboardKey {self.key}/>"
