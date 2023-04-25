@@ -28,7 +28,7 @@ def View():
         else:
             with open('data.pickle', 'wb') as f:
                 pickle.dump({'user': data['message']}, f)
-            raise ChangeTo("play")
+            raise ChangeTo("main_menu")
 
     def BackToSignup():
         raise ChangeTo("signup")

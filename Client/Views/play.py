@@ -35,7 +35,7 @@ def View():
 
     def GetMenuButton(x, y):
         try:
-            return Button(screen, base_font, (padding + x * card_width, padding + card_height * (y-1), card_width-padding//2, card_height-padding//2), (23,145,142), levels[(y-1)*max_w:y*max_w][x], (0,0,0), lambda: GoToLevel(levels[(y-1)*max_w:y*max_w][x]), fixed_pos=True)
+            return Button(screen, base_font, (padding + x * card_width, (padding + card_height * (y-1)) + 50, card_width-padding//2, card_height-padding//2), (23,145,142), levels[(y-1)*max_w:y*max_w][x], (0,0,0), lambda: GoToLevel(levels[(y-1)*max_w:y*max_w][x]), fixed_pos=True)
         except:
             pass
 
@@ -44,7 +44,11 @@ def View():
         for y in range(1, rows) for x in range(max_w)
     ]
 
-    UI_ELEMS = []
+    def BackToMain():
+        raise ChangeTo("main_menu")
+    
+    back_button = Button(screen, base_font, (10, 10, 140, 40), (23,145,142), "Back", (0,0,0), BackToMain)
+    UI_ELEMS = [back_button]
 
     run = True
 

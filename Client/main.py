@@ -10,6 +10,7 @@ import Views.pausemenu as pausemenu
 import Views.completion as completion
 import Views.play as play
 import Views.speedtest as speedtest
+import Views.results as results
 
 scenes = {
     'login': login,
@@ -19,11 +20,12 @@ scenes = {
     'pausemenu': pausemenu,
     'completion': completion,
     'play': play,
-    'speed_test': speedtest
+    'speed_test': speedtest,
+    'results': results
 }
 
 def main():
-    scene = 'main_menu'
+    scene = 'login'
     run = True
     while run:
         try:

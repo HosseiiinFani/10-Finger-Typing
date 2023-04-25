@@ -10,11 +10,12 @@ from Transitions.ChangeScene import ChangeTo
 protected = False
 
 def View():
+    center = (screen.get_width()//2, screen.get_height()//2)
+
     name_field = Input((center[0]-70, 50, 140, 32), (123,224, 52), screen, base_font, placeholder="Name")  
     username_field = Input((center[0]-70, 100, 140, 32), (123,224, 52), screen, base_font, placeholder="Username")  
     pwd_field = PasswordInput((center[0]-70, 150, 140, 32), (123,224, 52), screen, base_font, placeholder="Password")  
 
-    center = (screen.get_width()//2, screen.get_height()//2)
 
     def Signup():
         if name_field.value == "" or username_field.value == "" or pwd_field.value == "":
