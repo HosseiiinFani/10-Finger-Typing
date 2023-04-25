@@ -134,6 +134,7 @@ def View():
                                     baseline = text_surf_rect.y
                                     text_surf = pygame.Surface(text_surf_rect.size)
                                     text_surf_rect.center = (225, 50)
+                                    metrics = font.get_metrics(current)
                                 except StopIteration:
                                     time = strftime("%M:%S", gmtime(int(timer() - start_time)))
                                     _time = int(timer() - start_time)
@@ -152,7 +153,6 @@ def View():
                                     transferContext(level_name, max(round(final_score), 0), errors, time, level_score)
                                     return "completion"
 
-                                metrics = font.get_metrics(current)
                             wrong = False
                         else:
                             wrong = True
@@ -202,7 +202,7 @@ def View():
         # time_text.fill(BG)
         time_text = base_font.render(f'Time: {strftime("%M:%S", gmtime(int(timer() - start_time)))}', False, (0,0,0))
         screen.blit(time_text, (30, 40))
-        screen.blit(text_surf, text_surf_rect)
+        screen.blit(text_surf, (180, 30))
         screen.blit(errors_text, (40, 20))
         ### MARK: 004501``
         # if wrong: screen.blit(sad, (screen.get_width()-150, 20))
