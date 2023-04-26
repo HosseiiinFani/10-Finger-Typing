@@ -16,7 +16,7 @@ def View():
     def Play():
         raise ChangeTo("play")
     def Logout():
-        raise ChangeTo("logout")
+        raise ChangeTo("login")
     def SpeedTest():
         raise ChangeTo("speed_test")
     def _logout():
