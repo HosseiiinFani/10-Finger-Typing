@@ -119,7 +119,8 @@ def View():
                 else:
                     b_p = True
                 if ord(button_name if button_name != '' else 'a') == 8:
-                        current_idx -= 1
+                        # current_idx -= 1
+                        pass
                 else:
                     if b_p:
                         if event.unicode == current[current_idx]:

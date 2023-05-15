@@ -38,7 +38,7 @@ def View():
         if loaded_obj['user']:
             user_button = Button(screen, base_font, (center[0]-70, 100, 140, 40), BG, str(loaded_obj['user'][1]), (0,0,0), Pass)
             UI_ELEMS.append(user_button)
-
+    pygame.event.post(pygame.event.Event(USEREVENT+1, {}))
     while run:
         for event in pygame.event.get():
     

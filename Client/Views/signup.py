@@ -40,6 +40,9 @@ def View():
 
     run = True
 
+    pygame.event.post(pygame.event.Event(USEREVENT+1, {}))
+
+
     while run:
         for event in pygame.event.get():
     

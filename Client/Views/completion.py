@@ -22,6 +22,7 @@ def View():
 
     with open('context.pickle', 'rb') as f:
         context = pickle.load(f)
+    pygame.event.post(pygame.event.Event(USEREVENT+1, {}))
 
     while run:
         for event in pygame.event.get():

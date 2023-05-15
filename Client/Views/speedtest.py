@@ -8,6 +8,7 @@ from pygame.locals import USEREVENT
 import pickle
 from Transitions.ChangeScene import ChangeTo
 import random
+from UI.Button import Button
 
 def View():
     y = 600
@@ -43,9 +44,14 @@ def View():
     KEYS = KEYBUTTONS
     [key.set_base(55,y - 300) for key in KEYS]
 
-    start_time = timer()
-    time_text = base_font.render(f'Time: {strftime("%M:%S", gmtime(int(timer() - start_time)))}', False, (0,0,0))
-    UI_ELEMS = []
+    start_time = 0
+    time_text = base_font.render(f'Time: {strftime("%M:%S", gmtime(60))}', False, (0,0,0))
+
+    def BackToMain():
+        raise ChangeTo("main_menu")
+    
+    back_button = Button(screen, base_font, (screen.get_width() - 180, 20, 140, 40), (23,145,142), "Back", (0,0,0), BackToMain)
+    UI_ELEMS = [back_button]
 
     run = True
 
@@ -77,6 +83,8 @@ def View():
         transferContext(wpm, len(list(filter(lambda x: x == False, states))))
 
     writing_text = ""
+
+    first_key = True
     while run:
         screen.fill(BG)
         time_text.fill(BG)
@@ -109,6 +117,9 @@ def View():
                 if not event.key in [pygame.K_BACKSPACE, pygame.K_RSHIFT, pygame.K_LSHIFT, pygame.K_CAPSLOCK, pygame.K_ESCAPE, pygame.K_TAB, pygame.K_RETURN, pygame.K_SPACE]:
                     writing_text += event.unicode
                     b_p = True
+                    if first_key:
+                        start_time = timer()
+                        first_key = False
                 if event.key == pygame.K_BACKSPACE: writing_text = writing_text[:-1]
                 if event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT: 
                     shift_p = True
@@ -120,8 +131,8 @@ def View():
 
             try:
                 [element.render(event) for element in UI_ELEMS]
-            except:
-                pass
+            except ChangeTo as e:
+                return e
         pygame.event.post(pygame.event.Event(USEREVENT+1, {}))
         for i, sentence in enumerate(data[current_sentence:current_sentence+3]):    
             text = base_font.render(sentence, False, (0,0,0))
@@ -145,8 +156,8 @@ def View():
             screen.blit(current_text_surf, ((base_x + progress_base_x), (1) * 120))
 
 
-
-        time_text = base_font.render(f'Time: {strftime("%M:%S", gmtime(remaining))}', False, (0,0,0))
+        if not first_key:
+            time_text = base_font.render(f'Time: {strftime("%M:%S", gmtime(remaining))}', False, (0,0,0))
         screen.blit(time_text, (10, 10))
         text.fill(BG)
         time_text.fill(BG)

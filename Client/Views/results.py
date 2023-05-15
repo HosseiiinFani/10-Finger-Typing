@@ -3,10 +3,15 @@ from lib.colors import BG
 from setup import *
 import pickle
 from Transitions.ChangeScene import ChangeTo
+from UI.Button import Button
 
 def View():
 
-    UI_ELEMS = []
+    def BackToMain():
+        raise ChangeTo("main_menu")
+    
+    back_button = Button(screen, base_font, (10, 10, 140, 40), (23,145,142), "Back", (0,0,0), BackToMain)
+    UI_ELEMS = [back_button]
 
     run = True
 

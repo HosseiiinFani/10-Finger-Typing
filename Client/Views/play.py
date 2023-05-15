@@ -51,6 +51,7 @@ def View():
     UI_ELEMS = [back_button]
 
     run = True
+    pygame.event.post(pygame.event.Event(USEREVENT+1, {}))
 
     while run:
         for event in pygame.event.get():
